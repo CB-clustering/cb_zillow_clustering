@@ -255,6 +255,11 @@ def clean_and_prep_data(df):
     # there were a few incorrect zip codes, <10, so i drop them here
     df = df[df.zip < 100_000]
 
+    cols = ['bedrooms', 'bathrooms', 'sq_ft', 'tax_value', 'tax_amount', 'tax_rate','price_per_sq_ft']
+
+    #removing outliers--see the function elsewhere in this file
+    df = remove_outliers(df, 1.5, cols)
+
     # Just to be sure we caught all nulls, drop them here
     df = df.dropna()
 
