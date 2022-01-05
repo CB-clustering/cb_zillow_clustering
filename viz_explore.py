@@ -1,11 +1,11 @@
 import pandas as pd
 import numpy as np
-import matplotlib as plt
+import matplotlib.pyplot as plt
 import seaborn as sns
 import scipy
 import wrangle
 
-def histograms1():
+def histograms1(df):
     '''
     creates some histograms to visually review the data--7 at a time
     '''
@@ -40,7 +40,7 @@ def histograms1():
         plt.tight_layout()
 
 
-def hists2():
+def hists2(df):
     '''
     Same as hists1 but for the next 7 attributes
     '''
@@ -95,9 +95,9 @@ def hists2():
         plt.tight_layout()
 
 
-def hists3():
+def hists3(df):
     '''
-    Same as hists2 but for the final 6 attributes
+    Same as hists2 but for the next 6 attributes
     '''
     plt.figure(figsize=(16, 3))
 
@@ -137,6 +137,61 @@ def hists3():
 
         # Create subplot.
         plt.subplot(1,7, plot_number)
+
+        # Title with column name.
+        plt.title(col)
+
+        # Display histogram for column.
+        plt.boxplot(df[col])
+
+        # Hide gridlines.
+        plt.grid(False)
+
+        plt.tight_layout()
+
+
+
+def hists4(df):
+    '''
+    Same as hists2 but for the final attributes
+    '''
+    plt.figure(figsize=(16, 3))
+
+    # List of columns
+
+    cols = ['tax_rate','price_per_sq_ft','age_bin']
+    # col list from previous analysis...
+    # cols = ['bedrooms', 'bathrooms','sq_ft','tax_value', 'age', 'sq_ft_per_bathroom']
+    # Note the enumerate code, which is functioning to make a counter for use in successive plots.
+
+    for i, col in enumerate(cols):
+
+        # i starts at 0, but plot nos should start at 1
+        plot_number = i + 1 
+
+        # Create subplot.
+        plt.subplot(1,3, plot_number)
+
+        # Title with column name.
+        plt.title(col)
+
+        # Display histogram for column.
+        df[col].hist(bins=10, edgecolor='black')
+
+        # Hide gridlines.
+        plt.grid(False)
+
+        plt.tight_layout(),
+
+    plt.figure(figsize=(16, 3))
+
+    for i, col in enumerate(cols):
+
+        # i starts at 0, but plot nos should start at 1
+        plot_number = i + 1 
+
+        # Create subplot.
+        plt.subplot(1,3, plot_number)
 
         # Title with column name.
         plt.title(col)

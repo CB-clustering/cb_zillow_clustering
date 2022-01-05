@@ -179,7 +179,7 @@ def remove_outliers(df, k, col_list):
 
 def clean_and_prep_data(df):
     '''
-    This function will do some light cleaning and minimal other manipulation of the zillow data set, 
+    This function will do some cleaning and other manipulation of the zillow data set, 
     to get it ready to be split in the next step.
     
     '''
@@ -247,10 +247,18 @@ def clean_and_prep_data(df):
     df['sq_ft_per_room'] = df.sq_ft / df.rooms
     df['has_half_bath'] = (df.bathrooms - df.full_baths) != 0
     df['has_half_bath'] = df.has_half_bath.astype(int)
-    df['age_bin'] = pd.cut(df.age, [0,40,80,120,200])
+    df['age_bin'] = pd.cut(df.age, [0,20,40,80,100,200], labels=[1,2,3,4,5])
     df = df.drop(columns=['yearbuilt'])
+    df['tax_rate'] = df.tax_amount/df.tax_value*100
+    df['price_per_sq_ft'] = df.structure_value/df.sq_ft
+
     # there were a few incorrect zip codes, <10, so i drop them here
     df = df[df.zip < 100_000]
+
+    cols = ['bedrooms', 'bathrooms', 'sq_ft', 'tax_value', 'tax_amount', 'tax_rate','price_per_sq_ft']
+
+    #removing outliers--see the function elsewhere in this file
+    df = remove_outliers(df, 1.5, cols)
 
     # Just to be sure we caught all nulls, drop them here
     df = df.dropna()
@@ -316,25 +324,25 @@ def scale_zillow(train, validate, test):
        'latitude', 'longitude', 'lot_size', 'census_tract', 'city_id', 'zip',
        'rooms', 'structure_value', 'tax_value', 'year_assessed', 'land_value',
        'tax_amount', 'logerror', 'age', 'sq_ft_per_bathroom',
-       'sq_ft_per_bedroom', 'sq_ft_per_room', 'has_half_bath',
+       'sq_ft_per_bedroom', 'sq_ft_per_room', 'has_half_bath', 'tax_rate', 'price_per_sq_ft',
        'Los_Angeles', 'Orange', 'Ventura']])
     train_scaled = scaler.transform(train[['parcelid', 'bathrooms', 'bedrooms', 'condition', 'sq_ft', 'full_baths',
        'latitude', 'longitude', 'lot_size', 'census_tract', 'city_id', 'zip',
        'rooms', 'structure_value', 'tax_value', 'year_assessed', 'land_value',
        'tax_amount', 'logerror', 'age', 'sq_ft_per_bathroom',
-       'sq_ft_per_bedroom', 'sq_ft_per_room', 'has_half_bath',
+       'sq_ft_per_bedroom', 'sq_ft_per_room', 'has_half_bath','tax_rate','price_per_sq_ft',
        'Los_Angeles', 'Orange', 'Ventura']])
     validate_scaled = scaler.transform(validate[['parcelid', 'bathrooms', 'bedrooms', 'condition', 'sq_ft', 'full_baths',
        'latitude', 'longitude', 'lot_size', 'census_tract', 'city_id', 'zip',
        'rooms', 'structure_value', 'tax_value', 'year_assessed', 'land_value',
        'tax_amount', 'logerror', 'age', 'sq_ft_per_bathroom',
-       'sq_ft_per_bedroom', 'sq_ft_per_room', 'has_half_bath',
+       'sq_ft_per_bedroom', 'sq_ft_per_room', 'has_half_bath','tax_rate','price_per_sq_ft',
        'Los_Angeles', 'Orange', 'Ventura']])
     test_scaled = scaler.transform(test[['parcelid', 'bathrooms', 'bedrooms', 'condition', 'sq_ft', 'full_baths',
        'latitude', 'longitude', 'lot_size', 'census_tract', 'city_id', 'zip',
        'rooms', 'structure_value', 'tax_value', 'year_assessed', 'land_value',
        'tax_amount', 'logerror', 'age', 'sq_ft_per_bathroom',
-       'sq_ft_per_bedroom', 'sq_ft_per_room', 'has_half_bath',
+       'sq_ft_per_bedroom', 'sq_ft_per_room', 'has_half_bath','tax_rate','price_per_sq_ft',
        'Los_Angeles', 'Orange', 'Ventura']])
 
     # Turn the datasets into pandas dataframes for further manipulation:
@@ -342,23 +350,23 @@ def scale_zillow(train, validate, test):
        'latitude', 'longitude', 'lot_size', 'census_tract', 'city_id', 'zip',
        'rooms', 'structure_value', 'tax_value', 'year_assessed', 'land_value',
        'tax_amount', 'logerror', 'age', 'sq_ft_per_bathroom',
-       'sq_ft_per_bedroom', 'sq_ft_per_room', 'has_half_bath',
+       'sq_ft_per_bedroom', 'sq_ft_per_room', 'has_half_bath','tax_rate','price_per_sq_ft',
        'Los_Angeles', 'Orange', 'Ventura'])
     validate_scaled = pd.DataFrame(data=validate_scaled, columns=['parcelid', 'bathrooms', 'bedrooms', 'condition', 'sq_ft', 'full_baths',
        'latitude', 'longitude', 'lot_size', 'census_tract', 'city_id', 'zip',
        'rooms', 'structure_value', 'tax_value', 'year_assessed', 'land_value',
        'tax_amount', 'logerror', 'age', 'sq_ft_per_bathroom',
-       'sq_ft_per_bedroom', 'sq_ft_per_room', 'has_half_bath',
+       'sq_ft_per_bedroom', 'sq_ft_per_room', 'has_half_bath','tax_rate','price_per_sq_ft',
        'Los_Angeles', 'Orange', 'Ventura'])
     test_scaled = pd.DataFrame(data=test_scaled, columns=['parcelid', 'bathrooms', 'bedrooms', 'condition', 'sq_ft', 'full_baths',
        'latitude', 'longitude', 'lot_size', 'census_tract', 'city_id', 'zip',
        'rooms', 'structure_value', 'tax_value', 'year_assessed', 'land_value',
        'tax_amount', 'logerror', 'age', 'sq_ft_per_bathroom',
-       'sq_ft_per_bedroom', 'sq_ft_per_room', 'has_half_bath',
+       'sq_ft_per_bedroom', 'sq_ft_per_room', 'has_half_bath','tax_rate','price_per_sq_ft',
        'Los_Angeles', 'Orange', 'Ventura'])
 
     # Divide into x/y
-
+    # I was getting duplicate columns in the y_ data sets, so I transposed, dropped duplicates, and transposed back
     X_train_scaled = train_scaled.drop(columns=['logerror'])
     y_train_scaled = train_scaled.logerror.T.drop_duplicates().T
 
