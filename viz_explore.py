@@ -159,7 +159,7 @@ def hists4(df):
 
     # List of columns
 
-    cols = ['tax_rate','price_per_sq_ft']
+    cols = ['tax_rate','price_per_sq_ft','age_bin']
     # col list from previous analysis...
     # cols = ['bedrooms', 'bathrooms','sq_ft','tax_value', 'age', 'sq_ft_per_bathroom']
     # Note the enumerate code, which is functioning to make a counter for use in successive plots.
@@ -170,7 +170,7 @@ def hists4(df):
         plot_number = i + 1 
 
         # Create subplot.
-        plt.subplot(1,2, plot_number)
+        plt.subplot(1,3, plot_number)
 
         # Title with column name.
         plt.title(col)
@@ -191,7 +191,7 @@ def hists4(df):
         plot_number = i + 1 
 
         # Create subplot.
-        plt.subplot(1,2, plot_number)
+        plt.subplot(1,3, plot_number)
 
         # Title with column name.
         plt.title(col)
