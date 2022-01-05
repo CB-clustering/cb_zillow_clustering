@@ -70,3 +70,27 @@ def find_k(X_train, cluster_vars, k_range):
     plt.show()
 
     return k_comparisons_df
+
+
+def create_clusters(X_train, k, cluster_vars):
+    # create kmean object
+    kmeans = KMeans(n_clusters=k, random_state = 13)
+
+    # fit to train and assign cluster ids to observations
+    kmeans.fit(X_train[cluster_vars])
+
+    return kmeans
+
+
+
+# get the centroids for each distinct cluster...
+
+def get_centroids(kmeans, cluster_vars, cluster_name):
+    # get the centroids for each distinct cluster...
+
+    centroid_col_names = ['centroid_' + i for i in cluster_vars]
+
+    centroid_df = pd.DataFrame(kmeans.cluster_centers_, 
+                               columns=centroid_col_names).reset_index().rename(columns={'index': cluster_name})
+
+    return centroid_df
