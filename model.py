@@ -25,7 +25,7 @@ from sklearn.cluster import KMeans
 
 
 
-def find_k(X_train_scaled, cluster_vars, k_range):
+def find_k(X_train, cluster_vars, k_range):
     sse = []
     for k in k_range:
         kmeans = KMeans(n_clusters=k)
