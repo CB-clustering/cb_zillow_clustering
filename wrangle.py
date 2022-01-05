@@ -179,7 +179,7 @@ def remove_outliers(df, k, col_list):
 
 def clean_and_prep_data(df):
     '''
-    This function will do some light cleaning and minimal other manipulation of the zillow data set, 
+    This function will do some cleaning and other manipulation of the zillow data set, 
     to get it ready to be split in the next step.
     
     '''
@@ -247,7 +247,7 @@ def clean_and_prep_data(df):
     df['sq_ft_per_room'] = df.sq_ft / df.rooms
     df['has_half_bath'] = (df.bathrooms - df.full_baths) != 0
     df['has_half_bath'] = df.has_half_bath.astype(int)
-    df['age_bin'] = pd.cut(df.age, [0,40,80,120,200])
+    df['age_bin'] = pd.cut(df.age, [0,20,40,80,100,200], labels=[1,2,3,4,5])
     df = df.drop(columns=['yearbuilt'])
     # there were a few incorrect zip codes, <10, so i drop them here
     df = df[df.zip < 100_000]
@@ -358,7 +358,7 @@ def scale_zillow(train, validate, test):
        'Los_Angeles', 'Orange', 'Ventura'])
 
     # Divide into x/y
-
+    # I was getting duplicate columns in the y_ data sets, so I transposed, dropped duplicates, and transposed back
     X_train_scaled = train_scaled.drop(columns=['logerror'])
     y_train_scaled = train_scaled.logerror.T.drop_duplicates().T
 
