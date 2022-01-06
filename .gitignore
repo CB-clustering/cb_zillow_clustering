@@ -1,5 +1,5 @@
 # Files to ignore
 env.py
 .DS_Store
-.ipynb_checpoints/
-__pycache_
+.ipynb_checkpoints/
+__pycache__/
