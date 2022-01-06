@@ -19,7 +19,7 @@ warnings.filterwarnings("ignore")
 import wrangle
 import viz_explore
 import scipy.stats as stats
-import model
+import brian_model
 
 from sklearn.cluster import KMeans
 

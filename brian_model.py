@@ -41,15 +41,12 @@ def create_data_for_models(X_train_scaled, X_validate_scaled, X_test_scaled):
     all features dropped except those given by my kbest feature engineering function in previous cells.
     
     '''
-    X_train_kbest = X_train_scaled.drop(columns = ['bedrooms', 'sq_ft_per_bathroom', 'LA',
-       'Orange', 'Ventura'])
-    X_validate_kbest = X_validate_scaled.drop(columns = ['bedrooms', 'sq_ft_per_bathroom', 'LA',
-       'Orange', 'Ventura'])
-    X_test_kbest = X_test_scaled.drop(columns = ['bedrooms', 'sq_ft_per_bathroom', 'LA',
-       'Orange', 'Ventura'])
-    X_train_rfe = X_train_scaled.drop(columns = ['bedrooms', 'bathrooms', 'age', 'sq_ft_per_bathroom', 'Ventura'])
-    X_validate_rfe = X_validate_scaled.drop(columns = ['bedrooms', 'bathrooms', 'age', 'sq_ft_per_bathroom', 'Ventura'])
-    X_test_rfe = X_test_scaled.drop(columns = ['bedrooms', 'bathrooms', 'age', 'sq_ft_per_bathroom', 'Ventura'])
+    X_train_kbest = X_train_scaled[['bedrooms', 'condition', 'rooms', 'tax_amount', 'price_per_sq_ft']]
+    X_validate_kbest = X_validate_scaled[['bedrooms', 'condition', 'rooms', 'tax_amount', 'price_per_sq_ft']]
+    X_test_kbest = X_test_scaled[['bedrooms', 'condition', 'rooms', 'tax_amount', 'price_per_sq_ft']]
+    X_train_rfe = X_train_scaled[['condition','lot_size', 'structure_value', 'sq_ft_per_bathroom', 'price_per_sq_ft']]
+    X_validate_rfe = X_validate_scaled[['condition','lot_size', 'structure_value', 'sq_ft_per_bathroom', 'price_per_sq_ft']]
+    X_test_rfe = X_test_scaled[['condition','lot_size', 'structure_value', 'sq_ft_per_bathroom', 'price_per_sq_ft']]
 
     return X_train_kbest, X_validate_kbest, X_test_kbest, X_train_rfe, X_validate_rfe, X_test_rfe
 

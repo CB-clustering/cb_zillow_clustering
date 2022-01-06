@@ -380,16 +380,19 @@ def scale_zillow(train, validate, test):
     # I was getting duplicate columns in the y_ data sets, so I transposed, dropped duplicates, and transposed back
     X_train_scaled = train_scaled.drop(columns=['logerror'])
     # y_train_scaled = train_scaled.logerror.T.drop_duplicates().T
-    y_train_scaled = train_scaled.logerror
+    y_train_scaled = train_scaled['logerror']
+    y_train_scaled = pd.DataFrame(data=y_train_scaled, columns=['logerror'])
 
     X_validate_scaled = validate_scaled.drop(columns=['logerror'])
     # y_validate_scaled = validate_scaled.logerror.T.drop_duplicates().T
-    y_validate_scaled = validate_scaled.logerror
+    y_validate_scaled = validate_scaled['logerror']
+    y_validate_scaled = pd.DataFrame(data=y_validate_scaled, columns=['logerror'])
 
 
     X_test_scaled = test_scaled.drop(columns=['logerror'])
     # y_test_scaled = test_scaled.logerror.T.drop_duplicates().T
-    y_test_scaled = test_scaled.logerror
+    y_test_scaled = test_scaled['logerror']
+    y_test_scaled = pd.DataFrame(data=y_test_scaled, columns=['logerror'])
 
 
 
