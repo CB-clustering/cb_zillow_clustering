@@ -314,6 +314,45 @@ def encode_zillow(df):
 
 
 
+# def scale_zillow(train, validate, test):
+#     '''
+#     Takes in the zillow dataframe and returns SCALED train, validate, test subset dataframes
+#     '''
+#     # Create scaler; fit to train; transform onto different 
+#     vars_to_scale =['bathrooms', 'bedrooms', 'condition', 'sq_ft', 'full_baths',
+#        'latitude', 'longitude', 'lot_size',
+#        'rooms', 'structure_value', 'tax_value', 'year_assessed', 'land_value',
+#        'tax_amount', 'logerror', 'age', 'sq_ft_per_bathroom',
+#        'sq_ft_per_bedroom', 'sq_ft_per_room', 'has_half_bath', 'tax_rate', 'price_per_sq_ft',
+#        'Los_Angeles', 'Orange', 'Ventura']
+
+#     scaler = MinMaxScaler()
+#     scaler.fit(train[vars_to_scale])
+#     train_scaled = scaler.transform(train[vars_to_scale])
+#     validate_scaled = scaler.transform(validate[ vars_to_scale])
+#     test_scaled = scaler.transform(test[vars_to_scale])
+
+#     # Turn the datasets into pandas dataframes for further manipulation:
+#     train_scaled = pd.DataFrame(data=train_scaled, columns= vars_to_scale)
+#     validate_scaled = pd.DataFrame(data=validate_scaled, columns= vars_to_scale)
+#     test_scaled = pd.DataFrame(data=test_scaled, columns= vars_to_scale)
+
+#     # Divide into x/y
+#     # I was getting duplicate columns in the y_ data sets, so I transposed, dropped duplicates, and transposed back
+#     X_train_scaled = train_scaled.drop(columns=['logerror'])
+#     y_train_scaled = train_scaled.logerror.T.drop_duplicates().T
+
+#     X_validate_scaled = validate_scaled.drop(columns=['logerror'])
+#     y_validate_scaled = validate_scaled.logerror.T.drop_duplicates().T
+
+#     X_test_scaled = test_scaled.drop(columns=['logerror'])
+#     y_test_scaled = test_scaled.logerror.T.drop_duplicates().T
+
+#     return train_scaled, X_train_scaled, y_train_scaled, validate_scaled, X_validate_scaled, y_validate_scaled, test_scaled, X_test_scaled, y_test_scaled
+
+
+
+#FROM CHRISTIAN_WRANGLE:
 def scale_zillow(train, validate, test):
     '''
     Takes in the zillow dataframe and returns SCALED train, validate, test subset dataframes
@@ -340,13 +379,19 @@ def scale_zillow(train, validate, test):
     # Divide into x/y
     # I was getting duplicate columns in the y_ data sets, so I transposed, dropped duplicates, and transposed back
     X_train_scaled = train_scaled.drop(columns=['logerror'])
-    y_train_scaled = train_scaled.logerror.T.drop_duplicates().T
+    # y_train_scaled = train_scaled.logerror.T.drop_duplicates().T
+    y_train_scaled = train_scaled.logerror
 
     X_validate_scaled = validate_scaled.drop(columns=['logerror'])
-    y_validate_scaled = validate_scaled.logerror.T.drop_duplicates().T
+    # y_validate_scaled = validate_scaled.logerror.T.drop_duplicates().T
+    y_validate_scaled = validate_scaled.logerror
+
 
     X_test_scaled = test_scaled.drop(columns=['logerror'])
-    y_test_scaled = test_scaled.logerror.T.drop_duplicates().T
+    # y_test_scaled = test_scaled.logerror.T.drop_duplicates().T
+    y_test_scaled = test_scaled.logerror
+
+
 
     return train_scaled, X_train_scaled, y_train_scaled, validate_scaled, X_validate_scaled, y_validate_scaled, test_scaled, X_test_scaled, y_test_scaled
 
