@@ -17,24 +17,26 @@ The intention of this project is to follow the data science pipeline by acquirin
 
 ## Project Goals
 
-The ultimate goal of this project is to build a model that predicts the tax value of the homes in question with a higher accuracy than the baseline I have chosen--the purpose being to be able to produce better, more accurate home price predictions than Zillow's competitors. 
+The ultimate goal of this project is to build a model that predicts the log error of the homes in question with a higher accuracy than the baseline I have chosen--the purpose being to be able to produce better, more accurate log error predictions than Zillow's competitors. 
 
 ## Initial Questions
 
-- Are larger homes valued higher?  
+- Is there a time period that has a higher or lower log error?  
 
-- What other aspects can be identified about higher-value homes?
+- What about a relationship between tax_value and logerror? (also: are these related targets?)
 
-- Do more bathrooms relate to higher tax value? What about square feet per bathroom--is there a sweet spot?
+- Does the condition of the home have an impact on the logerror?
 
-- Newer homes are larger; they are also valued more highly. Is there an exception to the rule?
+- Does (or...how does?) logerror differ by county?
+
+- Does my whole theory about half bathrooms bear out??
 
 
 ##  Steps to Reproduce
 
 In  the case of this project, there are several python files that can be used to acquire, clean, prepare and otherwise manipulate the data in advance of exploration, feature selection, and modeling (listed below).
 
-I split the data into X_train and y_train data sets for much of the exploration and modelling, and was careful that no features were directly dependent on the target variable (tax_value).  I created a couple of features of my own, which produced some useful insights, and dropped rows with null values (my final dataset was 44,864 rows long, from 52,442 that were downloaded using SQL)
+I split the data into X_train and y_train data sets for much of the exploration and modelling, and was careful that no features were directly dependent on the target variable (tax_value).  I created a couple of features of my own, which produced some useful insights, and dropped rows with null values (my final dataset was 39574 rows long, from 52,442 that were downloaded using SQL)
 
 Once the data is correctly prepared, it can be run through the sklearn preprocessing feature for polynomial regressiong and fit on the scaled X_train dataset, using only those features indicated from the recursive polynomial engineering feature selector (also an sklearn function).  This provided me with the best results for the purposes of my project.
 
@@ -58,6 +60,40 @@ ___________________
 - LA:	Belongs to Los Angeles county
 - Orange:	Belongs to Orange county
 - Ventura:	Belings to Ventura county
+
+| Variable          | Description                            |Data types|
+| ----------------- | -------------------------------------- |----------|
+|parcelid           |                                        |int64     |
+|bathrooms          |                                        |float64   |
+|bedrooms           |                                        |float64   |
+|condition          |                                        |float64   |
+|sq_ft              |                                        |float64   |
+|full_baths         |                                        |float64   |
+|latitude           |                                        |float64   |
+|longitude          |                                        |float64   |
+|lot_size           |                                        |float64   |
+|census_tract       |                                        |float64   |
+|city_id            |                                        |float64   |
+|zip                |                                        |float64   |
+|rooms              |                                        |float64   |
+|structure_value    |                                        |float64   |
+|tax_value          |                                        |float64   |
+|year_assessed      |                                        |float64   |
+|land_value         |                                        |float64   |
+|tax_amount         |                                        |float64   |
+|logerror           |                                        |float64   |
+|county             |                                        |object    |
+|age                |                                        |float64   |
+|sq_ft_per_bathroom |                                        |float64   |
+|sq_ft_per_bedroom  |                                        |float64   |
+|sq_ft_per_room     |                                        |float64   |
+|has_half_bath      |                                        |int64     |
+|age_bin            |                                        |category  |
+|tax_rate           |                                        |float64   |
+|price_per_sq_ft    |                                        |float64   |
+|Los_Angeles        |                                        |uint8     |
+|Orange             |                                        |uint8     |
+|Ventura            |                                        |uint8     |
 
 Variables created in the notebook (explanation where it helps for clarity):
 
