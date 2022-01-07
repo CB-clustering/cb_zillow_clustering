@@ -94,3 +94,24 @@ def get_centroids(kmeans, cluster_vars, cluster_name):
                                columns=centroid_col_names).reset_index().rename(columns={'index': cluster_name})
 
     return centroid_df
+
+
+def encode_clusters(df,cluster):
+    '''
+    This is encoding the cluster column for later modelling; it drops the original column 
+    once it has been encoded
+    
+    '''
+    # ordinal encoder? sklearn.OrdinalEncoder
+
+    # I had originally put the columns to be dummied inside the function. They are now in the inputs
+    # cols_to_dummy = df['county']
+    # df = pd.get_dummies(df, columns=['county'], dummy_na=False, drop_first=False)
+        
+    dummy_df = pd.get_dummies(df[cluster], dummy_na=False, drop_first=False)
+
+    # Not requiring me to concatenate for some reason here.  
+    df = pd.concat([df, dummy_df], axis = 1)
+#     df = df.rename(columns={'county_Los_Angeles':'Los_Angeles','county_Orange':'Orange','county_Ventura':'Ventura'})
+    df = df.drop(columns='deal_cluster')
+    return df
