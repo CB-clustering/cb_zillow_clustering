@@ -50,19 +50,19 @@ def create_data_for_models(X_train_scaled, X_validate_scaled, X_test_scaled):
 
     return X_train_kbest, X_validate_kbest, X_test_kbest, X_train_rfe, X_validate_rfe, X_test_rfe
 
-def create_data_for_models_including_clusters(X_train_scaled, X_validate_scaled, X_test_scaled):
+def create_data_for_models_including_clusters(X_train_scaled, X_validate_scaled, X_test_scaled, kbest_vars, rfe_vars):
     '''
     This function takes a DataFrame and manipulates it to arrive at a set of features
     to put into different models.  For instance, the X_train_kbest is a scaled DataFrame based on X_train_scaled, with
     all features dropped except those given by my kbest feature engineering function in previous cells.
     
     '''
-    X_train_kbest = X_train_scaled[['condition', 'price_per_sq_ft', 'deal_cluster_small_to_med_cheaper', 'deal_cluster_small_to_med_cheaper', 'deal_cluster_small_to_med_cheaper']]
-    X_validate_kbest = X_validate_scaled[['condition', 'price_per_sq_ft', 'deal_cluster_small_to_med_cheaper', 'deal_cluster_small_to_med_cheaper', 'deal_cluster_small_to_med_cheaper']]
-    X_test_kbest = X_test_scaled[['condition', 'price_per_sq_ft', 'deal_cluster_small_to_med_cheaper', 'deal_cluster_small_to_med_cheaper', 'deal_cluster_small_to_med_cheaper']]
-    X_train_rfe = X_train_scaled[['condition', 'price_per_sq_ft', 'deal_cluster_small_to_med_cheaper', 'deal_cluster_small_to_med_cheaper', 'deal_cluster_small_to_med_cheaper']]
-    X_validate_rfe = X_validate_scaled[['condition', 'price_per_sq_ft', 'deal_cluster_small_to_med_cheaper', 'deal_cluster_small_to_med_cheaper', 'deal_cluster_small_to_med_cheaper']]
-    X_test_rfe = X_test_scaled[['condition', 'price_per_sq_ft', 'deal_cluster_small_to_med_cheaper', 'deal_cluster_small_to_med_cheaper', 'deal_cluster_small_to_med_cheaper']]
+    X_train_kbest = X_train_scaled[kbest_vars]
+    X_validate_kbest = X_validate_scaled[kbest_vars]
+    X_test_kbest = X_test_scaled[kbest_vars]
+    X_train_rfe = X_train_scaled[rfe_vars]
+    X_validate_rfe = X_validate_scaled[rfe_vars]
+    X_test_rfe = X_test_scaled[rfe_vars]
 
     return X_train_kbest, X_validate_kbest, X_test_kbest, X_train_rfe, X_validate_rfe, X_test_rfe
 
