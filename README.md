@@ -48,52 +48,31 @@ LIST OF MODULES USED IN THE PROJECT, FOUND IN THE PROJECT DIRECTORY:
 
 ## Data Dictionary
 
-Variable	Meaning
-___________________
-- bedrooms:	The number of bedrooms
-- bathrooms:	The number of bathrooms
-- sq_ft:	How many square feet
-- tax_value:	The tax value of the home
-- county:	What county does it belong to
-- age:	How old is it?
-- sq_ft_per_bathroom:	How many square feet per bathroom?
-- LA:	Belongs to Los Angeles county
-- Orange:	Belongs to Orange county
-- Ventura:	Belings to Ventura county
+ 
 
 | Variable          | Description                            |Data types|
 | ----------------- | -------------------------------------- |----------|
-|parcelid           |                                        |int64     |
-|bathrooms          |                                        |float64   |
-|bedrooms           |                                        |float64   |
-|condition          |                                        |float64   |
-|sq_ft              |                                        |float64   |
-|full_baths         |                                        |float64   |
-|latitude           |                                        |float64   |
-|longitude          |                                        |float64   |
-|lot_size           |                                        |float64   |
-|census_tract       |                                        |float64   |
-|city_id            |                                        |float64   |
-|zip                |                                        |float64   |
-|rooms              |                                        |float64   |
-|structure_value    |                                        |float64   |
-|tax_value          |                                        |float64   |
-|year_assessed      |                                        |float64   |
-|land_value         |                                        |float64   |
-|tax_amount         |                                        |float64   |
-|logerror           |                                        |float64   |
-|county             |                                        |object    |
-|age                |                                        |float64   |
-|sq_ft_per_bathroom |                                        |float64   |
-|sq_ft_per_bedroom  |                                        |float64   |
-|sq_ft_per_room     |                                        |float64   |
-|has_half_bath      |                                        |int64     |
-|age_bin            |                                        |category  |
-|tax_rate           |                                        |float64   |
-|price_per_sq_ft    |                                        |float64   |
-|Los_Angeles        |                                        |uint8     |
-|Orange             |                                        |uint8     |
-|Ventura            |                                        |uint8     |
+|parcelid           | Identifies the parcel ID  number       |int64     |
+|bathrooms          | Indicates the number of bathrooms      |float64   |
+|bedrooms           | Indicates the number of bedrooms       |float64   |
+|condition          | Indicates the condition of the Property|float64   |
+|sq_ft              | Calculated square footage of the home  |float64   |
+|full_baths         | Indicates the number of full baths     |float64   |
+|tax_value          |The estimated value of the home         |float64   |
+|tax_amount         |taxes payed the previous year           |float64   |
+|logerror           |Error log from previous predictions     |float64   |
+|county             |Indicates the county location           |object    |
+|age                |Computed age  from the year built       |float64   |
+|sq_ft_per_bathroom |Square footage per Bathrooms            |float64   |
+|sq_ft_per_bedroom  |Square footage per bedroom              |float64   |
+|sq_ft_per_room     |Square footage per room                 |float64   |
+|has_half_bath      |Whether the property has half baths     |int64     |
+|age_bin            |Age range of the property               |category  |
+|tax_rate           |Calculated tax rate                     |float64   |
+|price_per_sq_ft    |Calculated price per squarefoot         |float64   |
+|Los_Angeles        |Belongs to Los Angeles County           |uint8     |
+|Orange             |Belongs to Orange County                |uint8     |
+|Ventura            |Belongs to Ventura County               |uint8     |
 
 Variables created in the notebook (explanation where it helps for clarity):
 
