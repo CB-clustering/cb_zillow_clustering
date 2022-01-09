@@ -382,3 +382,31 @@ def run_all_models_on_all_data(X_train_kbest, y_train_scaled, X_validate_kbest, 
 
     return metric_df
 
+
+
+def create_baseline_cluster_model(y_train_scaled, y_validate_scaled, y_test_scaled):
+    # 1. Predict logerror_pred_mean
+    # I create here new columns in the y_ data sets to hold the baseline value I am working with.
+    logerror_pred_mean = y_train_scaled.logerror.mean()
+    y_train_scaled['logerror_pred_mean'] = round(logerror_pred_mean, 5)
+    y_validate_scaled['logerror_pred_mean'] = round(logerror_pred_mean,5)
+    y_test_scaled['logerror_pred_mean'] = round(logerror_pred_mean,5)
+
+    # 2. RMSE of logerror_pred_mean
+    # Here, I calculate the Root Mean Squared Error of the baseline and print it
+    from sklearn.metrics import mean_squared_error
+
+    rmse_train = mean_squared_error(y_train_scaled.logerror,
+                                    y_train_scaled.logerror_pred_mean) ** .5
+    rmse_validate = mean_squared_error(y_validate_scaled.logerror, y_validate_scaled.logerror_pred_mean) ** (0.5)
+    return y_train_scaled, y_validate_scaled, y_test_scaled, rmse_train, rmse_validate
+
+
+
+def add_cluster_column_train(X_train_scaled,deal_cluster_df_train):
+    X_train_scaled['deal_cluster'] = kmeans_deal_cluster_df.predict(deal_cluster_df_train)
+    X_train_scaled['deal_cluster'] = np.where(X_train_scaled.deal_cluster == 0,'large_homes',np.where(\
+                                    X_train_scaled.deal_cluster == 1,'small_to_med_cheaper',\
+                                    np.where(X_train_scaled.deal_cluster == 2, 'small_cheap_lowtax',\
+                                    np.where(X_train_scaled.deal_cluster == 3,'small_expensive','small_cheap_midtax'))))
+    return X_train_scaled
