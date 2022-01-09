@@ -114,12 +114,37 @@ Variables created in the notebook (explanation where it helps for clarity):
 Missing values: there were only something around 200 missing values in the data; thus, we have dropped them in the wrangle.py file due to their relative scarcity.  By removing outliers, several thousand rows were dropped.
 
 ## Key findings, recommendations and takeaways
+At the beginning of my study, I took a few high-level type questions to get a handle on the problem, and refined them slowly with the time that was available:
+
+Is there a time period that has a higher or lower log error?
+
+What about a relationship between tax_value and logerror? (also: are these related targets?)
+
+Does the condition of the home have an impact on the logerror?
+
+Does (or...how does?) logerror differ by county?
+
+Does my whole theory about half bathrooms bear out?
+
+Most of these initial questions were disproved through exploration and statistical testing, but there were a couple of gems, and the "condition" of a home was in fact one of the final attributes to make it into the "winning" model.
+
+Our model, which has room for improvement, was capable of predicting the logerror of homes with a 1.5 percent improvement over baseline on the test data, and with similar margins for the train and validate data. We expect it to perform as well on unseen data as well.
+
+
  
 ## Recommendations
- 
+Building models that separate the counties might see some benefit, seeing as there area some different ways that the features work on logerror in different counties.
+
+Explore locations/city ids--we are of the belief that this attribute and related ones (latitue and longitude, for example), may yield some insight.
+
+
 
 ## Next steps
+The following is a brief list of items that we'd like to add to the model:
 
+A cluster relating to other aspects of a home's value (structure, land, etc)
+Also a cluster related to physical aspects of a home (beds and baths, for instance)
+Continue exploring other features' relationship to logerror, with an eye to mathmatical relationships (our early exploration mistakenly went down a dead end or two because of a failure to switch gears from the target variable of the previous project that this one builds off of)
  
 
 
