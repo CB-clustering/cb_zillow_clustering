@@ -1,14 +1,14 @@
-# REGRESSION
+# Clustering 
 
-## This file/repo contains information related to my Regression project, using thee Zillow dataset from the Codeup database.
+## This file/repo contains information related to our clustering project, using thee Zillow dataset from the Codeup database.
 
 ## Project Description
 
-This Jupyter Notebook and presentation explore the Zillow dataset from the Codeup database. The data used relates to 2017 real estate transactions relating to single family homes in three California counties, and different aspects of the properties. An important aspect of the Zillow business model is to be able to publish accurate home values; I intend to build a machine learning model that makes predictions about the tax value of the homes in question.
+This Jupyter Notebook and presentation explore the Zillow dataset from the Codeup database. The data used relates to 2017 real estate transactions relating to single family homes in three California counties, and different aspects of the properties. An important aspect of the Zillow business model is to be able to publish accurate home values; we intend to build a machine learning model that makes predictions about the log error of the homes in question.
 
-I will use Residual Mean Square Error as my metric for evaluation; many models will be built using different features and hyperparameters to find the model of best fit.  One of the final deliverables will be the RMSE value resulting from my best model, contrasted with the baseline RMSE.
+We will use Residual Mean Square Error as our metric for evaluation; many models will be built using different features and hyperparameters to find the model of best fit.  One of the final deliverables will be the RMSE value resulting from our best model, contrasted with the baseline RMSE.
 
-Additionally, a Jupyter Notebook with my main findings and conclusions will be a key deliverable; many .py files will exist as a back-up to the main Notebook (think "under-the-hood" coding that will facilitate the presentation).
+Additionally, a Jupyter Notebook with our main findings and conclusions will be a key deliverable; many .py files will exist as a back-up to the main Notebook (think "under-the-hood" coding that will facilitate the presentation).
 
 
 ## The Plan
@@ -17,7 +17,7 @@ The intention of this project is to follow the data science pipeline by acquirin
 
 ## Project Goals
 
-The ultimate goal of this project is to build a model that predicts the log error of the homes in question with a higher accuracy than the baseline I have chosen--the purpose being to be able to produce better, more accurate log error predictions than Zillow's competitors. 
+The ultimate goal of this project is to build a model that predicts the log error of the homes in question with a higher accuracy than the baseline we have chosen--the purpose being to be able to produce better, more accurate log error predictions than Zillow's competitors. 
 
 ## Initial Questions
 
@@ -29,22 +29,28 @@ The ultimate goal of this project is to build a model that predicts the log erro
 
 - Does (or...how does?) logerror differ by county?
 
-- Does my whole theory about half bathrooms bear out??
+- Does our whole theory about half bathrooms bear out??
 
 
 ##  Steps to Reproduce
 
 In  the case of this project, there are several python files that can be used to acquire, clean, prepare and otherwise manipulate the data in advance of exploration, feature selection, and modeling (listed below).
 
-I split the data into X_train and y_train data sets for much of the exploration and modelling, and was careful that no features were directly dependent on the target variable (tax_value).  I created a couple of features of my own, which produced some useful insights, and dropped rows with null values (my final dataset was 39574 rows long, from 52,442 that were downloaded using SQL)
+We split the data into X_train and y_train data sets for much of the exploration and modelling, and was careful that no features were directly dependent on the target variable (tax_value).  we created a couple of features which produced some useful insights, and dropped rows with null values (our final dataset was 39574 rows long, from 52,442 that were downloaded using SQL)
 
-Once the data is correctly prepared, it can be run through the sklearn preprocessing feature for polynomial regressiong and fit on the scaled X_train dataset, using only those features indicated from the recursive polynomial engineering feature selector (also an sklearn function).  This provided me with the best results for the purposes of my project.
+Once the data is correctly prepared, it can be run through the sklearn preprocessing feature for polynomial regressiong and fit on the scaled X_train dataset, using only those features indicated from the recursive polynomial engineering feature selector (also an sklearn function).  This provided us with the best results for the purposes of this project.
 
 LIST OF MODULES USED IN THE PROJECT, FOUND IN THE PROJECT DIRECTORY:
 -- wrangle.py: for acquiring, cleaning, encoding, splitting and scaling the data.  
 -- viz.py: used for creating several graphics for my final presentation
 -- model.py: many, many different versions of the data were used in different feature selection and modeling algorithms; this module is helpful for splitting them up neatly.
 -- feature_engineering.py: contains functions to help choose the 'best' features using certain sklearn functions 
+-- cluster_model.py : contains functions to help Perform Clustering using kmeans libraries
+
+ 
+
+
+
 
 ## Data Dictionary
 
@@ -59,9 +65,11 @@ LIST OF MODULES USED IN THE PROJECT, FOUND IN THE PROJECT DIRECTORY:
 |sq_ft              | Calculated square footage of the home  |float64   |
 |full_baths         | Indicates the number of full baths     |float64   |
 |tax_value          |The estimated value of the home         |float64   |
+|lot_size           |The size of the Property                |float64   |
 |tax_amount         |taxes payed the previous year           |float64   |
 |logerror           |Error log from previous predictions     |float64   |
 |county             |Indicates the county location           |object    |
+|structure_value    |The estimated value of the strucrure    |float64   |
 |age                |Computed age  from the year built       |float64   |
 |sq_ft_per_bathroom |Square footage per Bathrooms            |float64   |
 |sq_ft_per_bedroom  |Square footage per bedroom              |float64   |
@@ -103,30 +111,16 @@ Variables created in the notebook (explanation where it helps for clarity):
 - X_validate_rfe (scaled dataframe with only RFE features)
 - X_test_rfe (scaled dataframe with only RFE features)
 
-Missing values: there were only something around 200 missing values in the data; thus, I have dropped them in the wrangle.py file due to their relative scarcity.  By removing outliers, several thousand rows were dropped.
+Missing values: there were only something around 200 missing values in the data; thus, we have dropped them in the wrangle.py file due to their relative scarcity.  By removing outliers, several thousand rows were dropped.
 
 ## Key findings, recommendations and takeaways
-    
-Many of my initial questions had clear answers, but through statistical analysis I was able to make safe assumptions, which in turn led me down paths that I may have otherwise missed. More square feet, bedrooms and bathrooms all correlate to higher tax value; who would have thought that the relationship between these factors works differently depending on your county? 
-
-Even my model, which has room for improvement, was capable of predicting the tax value of homes--by over 10 percent on the test data, and with similar margins for the train and validate data. I expect it to perform as well on unseen data as well--keeping certain parameters constant.
-
+ 
 ## Recommendations
-
-I recommend exploring the relationship between half bathrooms and tax value as an easy addition to the model that may bring some benefit.  Additionally, running the model on LA county as separate from Ventura and orange might see some benefit, seeing as there area some different ways that the features work on tax value there. Square feet per bathroom is an example here--it didn't make it into my model, but may have value for future models.  
+ 
 
 ## Next steps
 
-Continuing to select new features from the Codeup database stands to improve the model--assuming they don't present unforeseen problems such as numerous null values, etc.  Fireplaces and pools and certain feature engineering around those elements in particular could be interesting (is it detrimental to have too many? for example). Even from my most preliminary analysis, it seemed that half baths were beneficial, and it would be interesting to look at similar phenomena in those other featurs mentioned (and unmentioned).  I would also like to explore the method I've used to eliminate outliers, at least for some features--I'm worried that there might have been some useful info that was dropped with the outliers, especially one bedroom homes.
-
-The following is a brief list of items that I'd like to add to the model:
-
-- Incorporate a "has half bath" feature
-- Run models on other features, including the half-bath and sfpb
-- Run models on LA versus other counties
-- Pull in other features from SQL
-- Ordinal encode the bathrooms and bedrooms
-
+ 
 
 
 
